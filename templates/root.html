@@ -1,0 +1,110 @@
+<div class="app t-c" style="max-width: 500px;" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-hide="id" md-colors="{ background: 'grey-A100' }">
+    <h2 class="md-headline">15 грн/мес</h2>
+    <div class="t-l m-r-xl m-l-xl">
+        <p class="t-lg m-sm">1 сайт</p>
+        <p class="t-lg m-sm">1 база данных MySQL</p>
+        <p class="t-lg m-sm">1 учетная запись FTP</p>
+        <p class="t-lg m-sm">3 ГБ дискового пространства</p>
+        <p class="t-lg m-sm">Трафик не ограничен</p>
+        <p class="t-lg m-sm">Бесплатный домен в зоне om.ua</p>
+    </div>
+    <div class="m-t-md">
+        <md-button href="mailto:support@om.ua" class="md-raised md-primary">
+            Заказать
+        </md-button>
+    </div>
+</div>
+
+<div class="app" layout="row" layout-align="center" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-show="loading" md-colors="{ background: 'grey-A100' }">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+
+<div class="app" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-show="!loading && id" md-colors="{ background: 'grey-A100' }">
+    <div layout="row" layout-align="center center">
+        <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Основная учетная запись FTP</p>
+        <p class="m-t-none m-b-xs">
+            <span ng-show="ftp">{{ ftp.name }}</span>
+            <md-button class="md-icon-button" ng-hide="ftp">
+                <md-icon md-font-icon="fa fa-plus"></md-icon>
+                <md-tooltip md-direction="left">Добавить осноуную учетную запись FTP</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-show="ftp">
+                <md-icon md-font-icon="fa fa-pencil"></md-icon>
+                <md-tooltip md-direction="left">Изменить основную учетную запись FTP</md-tooltip>
+            </md-button>
+        </p>
+        <p flex-gt-xs="10"></p>
+    </div>
+    <md-divider hide-gt-xs></md-divider>
+</div>
+
+<div class="app" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-show="id" ng-repeat="service in services | filter:{type: 'vhost'} track by service.id" md-colors="{ background: 'grey-A100' }">
+    <div layout="row" layout-align="center center">
+        <h2 class="md-headline" flex>{{ service.name }}</h2>
+        <p class="t-r t-sm">Оплачено до {{ service.expire | date:'yyyy-MM-dd' }}</p>
+    </div>
+    <div layout="row" layout-align="center center">
+        <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>База данных MySQL</p>
+        <p class="m-t-none m-b-xs">
+            <span ng-hide="service.subservices.database" class="t-i t-grey">Не добавлена</span>
+            <span ng-show="service.subservices.database">{{ service.subservices.database.name }}</span>
+            <md-button class="md-icon-button" ng-hide="service.subservices.database">
+                <md-icon md-font-icon="fa fa-plus"></md-icon>
+                <md-tooltip md-direction="left">Добавить базу данных MySQL</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-show="service.subservices.database">
+                <md-icon md-font-icon="fa fa-pencil"></md-icon>
+                <md-tooltip md-direction="left">Изменить базу данных MySQL</md-tooltip>
+            </md-button>
+        </p>
+        <p flex-gt-xs="10"></p>
+    </div>
+    <div layout="row" layout-align="center center">
+        <span ng-hide="service.subservices.mysql" class="t-i t-grey">Не добавлена</span>
+        <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Учетная запись MySQL</p>
+        <p class="m-t-none m-b-xs">
+            <span ng-show="service.subservices.mysql">{{ service.subservices.mysql.name }}</span>
+            <md-button class="md-icon-button" ng-hide="service.subservices.mysql">
+                <md-icon md-font-icon="fa fa-plus"></md-icon>
+                <md-tooltip md-direction="left">Добавить учетную запись MySQL</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-show="service.subservices.mysql">
+                <md-icon md-font-icon="fa fa-pencil"></md-icon>
+                <md-tooltip md-direction="left">Изменить учетную запись MySQL</md-tooltip>
+            </md-button>
+        </p>
+        <p flex-gt-xs="10"></p>
+    </div>
+    <div layout="row" layout-align="center center">
+        <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Учетная запись FTP</p>
+        <p class="m-t-none m-b-xs">
+            <span ng-hide="service.subservices.ftp" class="t-i t-grey">Не добавлена</span>
+            <span ng-show="service.subservices.ftp">{{ service.subservices.ftp.name }}</span>
+            <md-button class="md-icon-button" ng-hide="service.subservices.ftp">
+                <md-icon md-font-icon="fa fa-plus"></md-icon>
+                <md-tooltip md-direction="left">Добавить учетную запись FTP</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-show="service.subservices.ftp">
+                <md-icon md-font-icon="fa fa-pencil"></md-icon>
+                <md-tooltip md-direction="left">Изменить учетную запись FTP</md-tooltip>
+            </md-button>
+        </p>
+        <p flex-gt-xs="10"></p>
+    </div>
+    <div layout="row" layout-align="center center">
+        <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Дисковое пространство</p>
+        <p class="m-t-none m-b-xs">
+            используется
+            <span ng-show="service.subservices.volume">{{ service.subservices.volume.used }}</span>
+            из
+            <span ng-show="service.subservices.volume">{{ service.subservices.volume.quota }}</span>
+            ГБ
+            <md-button class="md-icon-button" ng-show="service.subservices.volume">
+                <md-icon md-font-icon="fa fa-pencil"></md-icon>
+                <md-tooltip md-direction="left">Изменить параметры</md-tooltip>
+            </md-button>
+        </p>
+        <p flex-gt-xs="10"></p>
+    </div>
+    <md-divider ng-if="!$last" hide-gt-xs></md-divider>
+</div>
