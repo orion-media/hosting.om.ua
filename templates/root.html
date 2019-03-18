@@ -1,4 +1,4 @@
-<div class="app t-c" style="max-width: 500px;" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-hide="id" md-colors="{ background: 'grey-A100' }">
+<div class="app m-t-md t-c" ng-class="{'p-sm': !om.isGt(), 'p-md m-b-md md-whiteframe-1dp': om.isGt()}" md-colors="{ background: 'grey-A100' }" style="max-width: 500px;" ng-hide="id">
     <h2 class="md-headline">15 грн/мес</h2>
     <div class="t-l m-r-xl m-l-xl">
         <p class="t-lg m-sm">1 сайт</p>
@@ -15,11 +15,11 @@
     </div>
 </div>
 
-<div class="app" layout="row" layout-align="center" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-show="loading" md-colors="{ background: 'grey-A100' }">
+<div class="app m-t-md" ng-class="{'p-sm': !om.isGt(), 'p-md m-b-md md-whiteframe-1dp': om.isGt()}" md-colors="{ background: 'grey-A100' }" layout="row" layout-align="center" ng-show="loading">
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
 
-<div class="app" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-show="!loading && id" md-colors="{ background: 'grey-A100' }">
+<div class="app m-t-md" ng-class="{'p-sm': !om.isGt(), 'p-md m-b-md md-whiteframe-1dp': om.isGt()}" md-colors="{ background: 'grey-A100' }" ng-show="!loading && id">
     <div layout="row" layout-align="center center">
         <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Основная учетная запись FTP</p>
         <p class="m-t-none m-b-xs">
@@ -38,10 +38,10 @@
     <md-divider hide-gt-xs></md-divider>
 </div>
 
-<div class="app" ng-class="{'p-sm': !isGt(), 'p-md': isGt(), 'm-t-md': isGt(), 'm-b-md': isGt(), 'md-whiteframe-1dp': isGt()}" ng-show="id" ng-repeat="service in services | filter:{type: 'vhost'} track by service.id" md-colors="{ background: 'grey-A100' }">
+<div class="app m-t-md" ng-class="{'p-sm': !om.isGt(), 'p-md m-b-md md-whiteframe-1dp': om.isGt()}" md-colors="{ background: 'grey-A100' }" ng-show="id" ng-repeat="service in services | filter:{type: 'vhost'} track by service.id">
     <div layout="row" layout-align="center center">
         <h2 class="md-headline" flex>{{ service.name }}</h2>
-        <p class="t-r t-sm">Оплачено до {{ service.expire | date:'yyyy-MM-dd' }}</p>
+        <p class="t-r t-sm" ng-show="service.expire">Оплачено до {{ service.expire | date:'yyyy-MM-dd' }}</p>
     </div>
     <div layout="row" layout-align="center center">
         <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>База данных MySQL</p>
@@ -60,9 +60,9 @@
         <p flex-gt-xs="10"></p>
     </div>
     <div layout="row" layout-align="center center">
-        <span ng-hide="service.subservices.mysql" class="t-i t-grey">Не добавлена</span>
         <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Учетная запись MySQL</p>
         <p class="m-t-none m-b-xs">
+            <span ng-hide="service.subservices.mysql" class="t-i t-grey">Не добавлена</span>
             <span ng-show="service.subservices.mysql">{{ service.subservices.mysql.name }}</span>
             <md-button class="md-icon-button" ng-hide="service.subservices.mysql">
                 <md-icon md-font-icon="fa fa-plus"></md-icon>
@@ -93,13 +93,12 @@
     </div>
     <div layout="row" layout-align="center center">
         <p class="m-t-none m-b-xs" flex-offset-gt-xs="10" flex>Дисковое пространство</p>
-        <p class="m-t-none m-b-xs">
-            используется
-            <span ng-show="service.subservices.volume">{{ service.subservices.volume.used }}</span>
-            из
-            <span ng-show="service.subservices.volume">{{ service.subservices.volume.quota }}</span>
-            ГБ
-            <md-button class="md-icon-button" ng-show="service.subservices.volume">
+        <p class="m-t-none m-b-xs" ng-show="service.subservices.volume">
+            <span ng-show="service.subservices.volume.used">используется {{ service.subservices.volume.used }}</span>
+            <span ng-show="service.subservices.volume.used && service.subservices.volume.quota">из</span>
+            <span ng-show="service.subservices.volume.quota">{{ service.subservices.volume.quota }}</span>
+            <span ng-show="service.subservices.volume.used || service.subservices.volume.quota">МБ</span>
+            <md-button class="md-icon-button">
                 <md-icon md-font-icon="fa fa-pencil"></md-icon>
                 <md-tooltip md-direction="left">Изменить параметры</md-tooltip>
             </md-button>
